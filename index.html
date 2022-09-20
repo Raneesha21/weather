@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
 </head>
 
-<body style="background-image:url(./weather-forecast-concept-sunny-rainy-blue-background-top-view-copy-space-weather-forecast-concept-sunny-rainy-blue-160677612.jpg);background-size: cover;">
+<body style="background-image:url(./image/weather.png);background-size: cover;">
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
@@ -58,7 +58,9 @@
         weathertype = cityDetails.weather[0].main
         windspeed = cityDetails.wind.speed
         lattitude = cityDetails.coord.lat
-        longitude = cityDetails.coord.lon
+        temp = cityDetails.main.temp
+
+        
 
 
         htmldata = `
