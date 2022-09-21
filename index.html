@@ -10,78 +10,141 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/675ad92f7a.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="./style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./style.css"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <style>
+        button{
+            margin-left: 245px;
+            margin-top: -57px;
+        }
+        h1{
+            margin-left: 245px;
+            margin-top: -200px;
+        }
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: #222;
+    background-image: url('https://source.unsplash.com/1600x900/?landscape');
+    font-size: 120%;
+  }
+  
+  .card {
+    display: flex;
+
+    color: rgb(13, 231, 243);
+  }
+  
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  button {
+    margin: 0.5em;
+    border-radius: 50%;
+    border: none;
+    height: 44px;
+    width: 44px;
+    outline: none;
+    background: #7c7c7c2b;
+    color: rgb(8, 7, 7);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+  }
+  
+  input.search_bar {
+    border: none;
+    outline: none;
+    padding: 0.4em 1em;
+    border-radius: 24px;
+    background: #7c7c7c2b;
+    color: rgb(9, 8, 8);
+    font-family: inherit;
+    font-size: 105%;
+    width: calc(100% - 100px);
+  }
+  
+  button:hover {
+    background: #7c7c7c6b;
+  }
+  
+
+  #result{
+    color: rgb(7, 9, 9);
+    text-align: justify;
+   
+  }
+
+
+    </style>
 </head>
 
-<body style="background-image:url(./image/weather.png);background-size: cover;">
+<body style="background-image:url(./images/drak.jpg);background-size: cover;">
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
-            <h1 class="text-center mt-5 p-3"
-                style="color:#169df6;font-family:'josefin Sans', sans-serif; font-weight: bolder; ">
-                Weather </h1>
         </div>
         <div class="col-4"></div>
     </div>
-    <div class=" mt-5 p-3">
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
-                <input type="text" placeholder="Enter city name" class="form-control" id="cname">
-            </div>
-            <div class="col-4">
-                <button type="button" class="btn btn-dark" onclick="search()"><i
-                        class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-
+    <div class="card">
+        <h2>Weather</h2>
+        <div class="search">
+          <input type="text" id="searchdist"  placeholder="Search">
+          <button onclick="search()" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
-        <br>
-        <div class="row" >
-            <div class="col-4"></div>
-            <div class="col-4" id="result" ></div>
-            <div class="col-4"></div>
-        </div>
+        <section>
+          <div class="" id="result"></div>
+        </section>
+      </div>
       
 </body>
 <script>
+  
     function search() {
-        city = cname.value
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5b4bee0ba241d092159faf007e166080`).then(res => res.json())
-            .then(data => displayData(data))
+      dist = searchdist.value
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${dist}&appid=5b4bee0ba241d092159faf007e166080`)
+        .then(res => res.json())
+        .then(data => displaydata(data))
+  
     }
-    function displayData(cityDetails) {
-        cname = cityDetails.name
-        temp = cityDetails.main.temp
-        weathertype = cityDetails.weather[0].main
-        windspeed = cityDetails.wind.speed
-        lattitude = cityDetails.coord.lat
-        temp = cityDetails.main.temp
-
-        
-
-
-        htmldata = `
-<div class="row bg-dark color-light height:300px">
-            <div class="col" style="color:white">
-                     ${cname}</div>
-            <div class="col" style="color:white">
-             temp :  ${temp}</div>
-            <div class="col" style="color:white">
-             type :  ${weathertype}</div>
-            <div class="col" style="color:white">
-             Speed : ${windspeed}</div>
-                <div class="col" style="color:white">
-             lat   :   ${lattitude}</div>
-         </div>
-         <div class="col" style="color:white">
-             lon   :   ${longitude}</div>
-         </div>`
-        result.innerHTML = htmldata
+    function displaydata(distDetails) {
+      cname = searchdist.value
+      temperature = distDetails.main.temp
+      weather = distDetails.weather[0].description
+      Main = distDetails.weather[0].main
+      wind = distDetails.wind.speed
+      lattitude = distDetails.coord.lat
+      longitude = distDetails.coord.lon
+      Sunrise = distDetails.sys.sunrise
+      Sunset = distDetails.sys.sunset
+      Icon=distDetails.weather[0].icon
+  
+  
+  
+      htmldata = `  <p>   city name: <span id="cityname" style="text-transform:uppercase">${cname}</span></p>
+        <p>   Temperature: <span id="temp">${temperature}</span></p>
+        <p>               weather type: <span id="weather">${weather}</span></p>
+        <p>              Main: <span id="main">${Main}</span></p>
+        <p>               wind speed: <span id="wind">${wind}</span></p>
+        <p>       lattitude: <span id="latt">${lattitude}</span></p>
+        <p> longitude: <span id="long">${longitude}</span></p>
+        <hr>
+        <p>           sunrise: <span id="sunrise">${Sunrise}</span></p>
+        <p>            sunset: <span id="sunrise">${Sunset}</span></p>
+  </span></p>`
+  
+      result.innerHTML = htmldata
+  
     }
-
-</script>
+  console.log(testNum(-5));
+  </script>
 
 </html>
